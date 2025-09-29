@@ -495,18 +495,21 @@
 
 	let lastGoodHash = window.location.hash && window.location.hash !== '#' ? window.location.hash : null
 
-	// click по якорям (исключаем href="#")
 	$(document).on('click', 'a[href^="#"]:not([href="#"])', function (e) {
+		// Если ссылка находится внутри Swiper — выходим
+		if ($(this).closest('.swiper, .swiper-container').length) {
+			return
+		}
+
 		const id = $(this).attr('href')
 		const $target = $(id)
 
-		if (!$target.length) return // нет цели, ничего не делаем
+		if (!$target.length) return
 
 		e.preventDefault()
 		$('html, body')
 			.stop()
 			.animate({ scrollTop: $target.offset().top }, 500, function () {
-				// ставим корректный хэш в адресной строке без прыжка
 				history.replaceState(null, null, id)
 				lastGoodHash = id
 			})
@@ -518,7 +521,6 @@
 		if (h && h !== '#') {
 			const $t = $(h)
 			if ($t.length) {
-				// предотвратить автоматический автоскролл браузера при навигации
 				if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
 
 				$('html, body')
@@ -531,7 +533,7 @@
 		}
 	})
 
-	// если кто-то вдруг поставит просто '#', восстанавливаем
+	// контроль hashchange
 	window.addEventListener(
 		'hashchange',
 		function () {
@@ -542,7 +544,6 @@
 					const $t = $(lastGoodHash)
 					if ($t.length) $('html, body').stop().animate({ scrollTop: $t.offset().top }, 200)
 				} else {
-					// просто убираем одинарный '#'
 					history.replaceState(null, null, window.location.pathname + window.location.search)
 				}
 			} else {
