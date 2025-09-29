@@ -20,7 +20,7 @@
 ==================================================*/
 
 ;(function ($) {
-	'use strict'
+	;('use strict')
 
 	var imJs = {
 		m: function (e) {
@@ -51,9 +51,9 @@
 				var swiper = new Swiper('.mySwiper-banner', {
 					spaceBetween: 0,
 					loop: true,
-					hashNavigation: {
-						watchState: true,
-					},
+					// hashNavigation: {
+					// 	watchState: true,
+					// },
 					pagination: {
 						el: '.swiper-pagination',
 						clickable: true,
@@ -71,9 +71,9 @@
 				var swiper = new Swiper('.mySwiper-banner-cleaning', {
 					spaceBetween: 0,
 					loop: true,
-					hashNavigation: {
-						watchState: true,
-					},
+					// hashNavigation: {
+					// 	watchState: true,
+					// },
 					pagination: {
 						el: '.swiper-pagination',
 						clickable: true,
@@ -91,9 +91,9 @@
 				var swiper = new Swiper('.mySwiper-about-feedback', {
 					spaceBetween: 0,
 					loop: true,
-					hashNavigation: {
-						watchState: true,
-					},
+					// hashNavigation: {
+					// 	watchState: true,
+					// },
 					pagination: {
 						el: '.swiper-pagination',
 						clickable: true,
@@ -111,9 +111,9 @@
 				var swiper = new Swiper('.aircondition-testimonials', {
 					spaceBetween: 0,
 					loop: true,
-					hashNavigation: {
-						watchState: true,
-					},
+					// hashNavigation: {
+					// 	watchState: true,
+					// },
 					pagination: {
 						el: '.swiper-pagination',
 						clickable: true,
@@ -257,9 +257,9 @@
 				var swiper = new Swiper('.project-details-carousel', {
 					spaceBetween: 0,
 					loop: true,
-					hashNavigation: {
-						watchState: true,
-					},
+					// hashNavigation: {
+					// 	watchState: true,
+					// },
 					pagination: {
 						el: '.swiper-pagination',
 						clickable: true,
@@ -492,66 +492,6 @@
 			}
 		},
 	}
-
-	let lastGoodHash = window.location.hash && window.location.hash !== '#' ? window.location.hash : null
-
-	$(document).on('click', 'a[href^="#"]:not([href="#"])', function (e) {
-		// Если ссылка находится внутри Swiper — выходим
-		if ($(this).closest('.swiper, .swiper-container').length) {
-			return
-		}
-
-		const id = $(this).attr('href')
-		const $target = $(id)
-
-		if (!$target.length) return
-
-		e.preventDefault()
-		$('html, body')
-			.stop()
-			.animate({ scrollTop: $target.offset().top }, 500, function () {
-				history.replaceState(null, null, id)
-				lastGoodHash = id
-			})
-	})
-
-	// при загрузке, если есть хэш — плавно скроллим и фиксируем его
-	$(function () {
-		const h = window.location.hash
-		if (h && h !== '#') {
-			const $t = $(h)
-			if ($t.length) {
-				if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
-
-				$('html, body')
-					.stop()
-					.animate({ scrollTop: $t.offset().top }, 500, function () {
-						history.replaceState(null, null, h)
-						lastGoodHash = h
-					})
-			}
-		}
-	})
-
-	// контроль hashchange
-	window.addEventListener(
-		'hashchange',
-		function () {
-			const h = window.location.hash
-			if (h === '#' || h === '') {
-				if (lastGoodHash) {
-					history.replaceState(null, null, lastGoodHash)
-					const $t = $(lastGoodHash)
-					if ($t.length) $('html, body').stop().animate({ scrollTop: $t.offset().top }, 200)
-				} else {
-					history.replaceState(null, null, window.location.pathname + window.location.search)
-				}
-			} else {
-				lastGoodHash = h
-			}
-		},
-		false
-	)
 
 	imJs.m()
 })(jQuery, window)
