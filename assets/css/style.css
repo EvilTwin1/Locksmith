@@ -15214,7 +15214,7 @@ nav ul li {
 	margin: 0;
 }
 nav ul li a {
-	padding: 19px 15px;
+	padding: 19px 15px !important;
 	display: block;
 	color: #1f1f25;
 	font-weight: 700;
